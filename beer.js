@@ -24,20 +24,16 @@
                                 method: 'flickr.photosets.getPhotos',
                                 extras: ['date_taken', 'url_t', 'url_m', 'url_s', 'tags'].join(',')
                               },
-                              //isArray: true
+                              isArray: true,
+                              transformResponse: function(data) {
+                                return JSON.parse(data).photoset.photo;
+                              }
                             }
                           });
 
     return {
-      //TOO remove the need for passing in $scope
       getPhotos: function($scope) {
-        return Photo.query({photoset_id: PHOTOSET_ID}, function(data) {
-          console.log(data);
-          $scope.photos = data.photoset.photo;
-          //if(data.photoset) {
-          //  $scope.photos = data.photoset.photo;
-         // }
-        });
+        return Photo.query({photoset_id: PHOTOSET_ID});
       }
     };
   });
@@ -46,7 +42,7 @@
 
   beers.controller('PhotoListCtrl', 
     function PhotoListCtrl($scope, photoService) {
-      $scope.photos = photoService.getPhotos($scope);
+      $scope.photos = photoService.getPhotos();
       //$scope.photos = [
         //{"title":"Lao Brewery Co - Beerlao","src":"http://farm4.staticflickr.com/3689/9225697519_008d6e5a83_m.jpg"},
         //{"title":"Brouwerij Timmermans John Martin N.V. - Bourgogne Des Flandres","src":"http://farm3.staticflickr.com/2870/9225698103_6c7a7fed3c_m.jpg"},
