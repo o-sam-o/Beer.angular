@@ -6,3 +6,22 @@ body {
 [ng\:cloak], [ng-cloak], .ng-cloak {
     display: none !important;
 }
+
+.beer-items {
+}
+
+.beer-item {
+  margin-bottom: 15px;
+}
+
+@media (max-width: 1200px) {
+  .beer-item figure {
+    width: 150px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .beer-item figure {
+    width: 180px;
+  }
+}
