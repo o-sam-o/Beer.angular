@@ -68,7 +68,7 @@
      <div class="body-content">
        <section class="beer-items" ng-cloak ng-controller="PhotoListCtrl">
          <div class="row">
-           <div class="col-lg-2 col-sm-3 col-6 beer-item" ng-repeat="photo in photos | limitTo:20 ">
+           <div class="col-lg-2 col-sm-3 col-6 beer-item" ng-repeat="photo in photos | photoSort:sortOrder | limitTo:20 ">
              <figure class="thumbnail">
                <img alt="{{photo.title}}" ng-src="{{photo.url_s}}">
                <figcaption style="display: none;">{{photo.title}}</figcaption>

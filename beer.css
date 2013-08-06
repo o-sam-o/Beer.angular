@@ -17,11 +17,13 @@ body {
 @media (max-width: 1200px) {
   .beer-item figure {
     width: 150px;
+    height: 250px;
   }
 }
 
 @media (min-width: 1200px) {
   .beer-item figure {
     width: 180px;
+    height: 250px;
   }
 }

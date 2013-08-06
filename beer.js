@@ -38,10 +38,26 @@
                           };
   });
 
-  var beers = angular.module('beers', ['beerServices']);
+
+  angular.module('beerFilters', []).filter('photoSort', function() {
+    return function(input, order) {
+      return input.sort(function(p1, p2) {
+        switch(order) {
+          case 'alpha':
+            return (p1.title < p2.title ? -1 : (p1.title > p2.title ? 1 : 0));
+          default:
+            console.log('unknown sort order ' + sort);
+            return 0;
+        }
+      });
+    }
+  });
+
+  var beers = angular.module('beers', ['beerServices', 'beerFilters']);
 
   beers.controller('PhotoListCtrl', 
                    function PhotoListCtrl($scope, photoService) {
+                     $scope.sortOrder = 'alpha'
                      $scope.photos = photoService.getPhotos();
                    }
                   );
