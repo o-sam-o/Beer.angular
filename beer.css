@@ -14,6 +14,16 @@ body {
   margin-bottom: 15px;
 }
 
+.beer-item figure {
+  position: relative;
+}
+
+.beer-item figure img {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
 @media (max-width: 1200px) {
   .beer-item figure {
     width: 150px;

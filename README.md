@@ -1,1 +1,3 @@
-TODO
+# Beer.angular
+
+Work in progress ....
