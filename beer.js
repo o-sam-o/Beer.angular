@@ -16,6 +16,9 @@
                               method: 'get',
                               params: {
                                 method: 'flickr.photos.getInfo'
+                              },
+                              transformResponse: function(data) {
+                                return JSON.parse(data).photo;
                               }
                             },
                             query: {
@@ -34,6 +37,9 @@
                           return {
                             getPhotos: function() {
                               return Photo.query({photoset_id: PHOTOSET_ID});
+                            },
+                            getPhoto: function(id) {
+                              return Photo.get({photo_id: id});
                             }
                           };
   });
@@ -54,11 +60,26 @@
   });
 
   var beers = angular.module('beers', ['beerServices', 'beerFilters']);
-
   beers.controller('PhotoListCtrl', 
                    function PhotoListCtrl($scope, photoService) {
                      $scope.sortOrder = 'alpha'
                      $scope.photos = photoService.getPhotos();
                    }
                   );
+
+    beers.controller('PhotoDetailCtrl', 
+                   function PhotoDetailCtrl($scope, $routeParams, photoService) {
+                     $scope.photoId = $routeParams.photoId;
+                     $scope.photo = photoService.getPhoto($scope.photoId);
+                   }
+                  );
+
+
+  beers.config(['$routeProvider', function($routeProvider) {
+    $routeProvider.
+      when('/photos', {templateUrl: 'partials/photo-list.html',   controller: 'PhotoListCtrl'}).
+      when('/photos/:photoId', {templateUrl: 'partials/photo-detail.html', controller: 'PhotoDetailCtrl'}).
+      otherwise({redirectTo: '/photos'});
+  }]);
+
 }());
