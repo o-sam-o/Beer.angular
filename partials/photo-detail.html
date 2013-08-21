@@ -1,5 +1,5 @@
 <div class="beer-detail" ng-cloak ng-controller="PhotoDetailCtrl">
-  <h2>{{photo.title}}</h2>
-  <img alt="{{photo.title}}" ng-src="{{photo.url_s}}">
+  <h2>{{photo.getTitle()}}</h2>
+  <img alt="{{photo.getTitle()}}" ng-src="{{photo.getMediumUrl()}}">
 </div>
 

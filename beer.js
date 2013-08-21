@@ -3,6 +3,43 @@
   var API_KEY = "ef9ad4ef689af505cde45ec1dc31120f";
   var PHOTOSET_ID = "72157625277593652"
 
+  var PhotoSummary = function(attr) {
+    this.attr = attr;
+  }
+  PhotoSummary.prototype = {
+    getId: function() {
+      return this.attr.id;
+    },
+
+    getTitle: function() {
+      return this.attr.title;
+    },
+
+    getSmallUrl: function() {
+      return this.attr.url_s;
+    },
+
+    compareByTitle: function(other) {
+      return (this.getTitle() < other.getTitle() ? -1 : (this.getTitle() > other.getTitle() ? 1 : 0));
+    }
+  }
+
+
+  var PhotoModel = function(attr) {
+    this.attr = attr;
+  }
+
+  PhotoModel.prototype = {
+    getTitle: function() {
+      return this.attr.title._content;
+    },
+
+    getMediumUrl: function() {
+      //TODO
+      return '';
+    }
+  };
+
   var services = angular.module('beerServices', ['ngResource']);
   services.factory('photoService', function($resource) {
     var Photo = $resource('http://api.flickr.com/services/rest/', 
@@ -18,7 +55,7 @@
                                 method: 'flickr.photos.getInfo'
                               },
                               transformResponse: function(data) {
-                                return JSON.parse(data).photo;
+                                return new PhotoModel(JSON.parse(data).photo);
                               }
                             },
                             query: {
@@ -29,7 +66,9 @@
                               },
                               isArray: true,
                               transformResponse: function(data) {
-                                return JSON.parse(data).photoset.photo;
+                                return JSON.parse(data).photoset.photo.map(function(attr) {
+                                  return new PhotoSummary(attr);
+                                });
                               }
                             }
                           });
@@ -50,7 +89,7 @@
       return input.sort(function(p1, p2) {
         switch(order) {
           case 'alpha':
-            return (p1.title < p2.title ? -1 : (p1.title > p2.title ? 1 : 0));
+            return p1.compareByTitle(p2);
           default:
             console.log('unknown sort order ' + sort);
             return 0;
