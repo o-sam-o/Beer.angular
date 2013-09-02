@@ -17,5 +17,15 @@ define(['angular'], function(angular) {
     }
   });
 
+  filterModule.filter('arrayListLimitTo', function() {
+    return function(input, limit) {
+      if(input && input.slice) {
+        return input.slice(0, limit);
+      } else {
+        return input;
+      }
+    };
+  });
+
 });
 
