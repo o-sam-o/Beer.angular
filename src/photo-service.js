@@ -22,6 +22,7 @@ define(['angular', 'beer-model', 'ls-linked-list', 'angular-resource'], function
 
   var services = angular.module('beerServices', ['ngResource']);
   services.factory('photoService', function($resource) {
+    var photos = null;
     var Photo = $resource('http://api.flickr.com/services/rest/', 
                           {
                             api_key: API_KEY,
@@ -52,13 +53,18 @@ define(['angular', 'beer-model', 'ls-linked-list', 'angular-resource'], function
 
                           return {
                             getPhotos: function() {
-                              return lsDb.load('photoStream', function() {
+                              photos = photos || lsDb.load('photoStream', function() {
                                 return Photo.query({photoset_id: PHOTOSET_ID});
-                              })
-                            },
-                            getPhoto: function(id) {
-                              return new PhotoModel(Photo.get({photo_id: id}));
-                            }
-                          };
+                              }, {
+                                postProcess: function(entry) {
+                                  return new PhotoSummary(entry);
+                                }
+                              });
+                              return photos;
+                              },
+                              getPhoto: function(id) {
+                                return new PhotoModel(Photo.get({photo_id: id}));
+                              }
+                            };
+                          });
   });
-});

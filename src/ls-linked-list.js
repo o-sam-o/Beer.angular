@@ -4,6 +4,11 @@ define(function() {
   var LsLinkList = function() {
   }
   LsLinkList.prototype = new Array;
+  /*
+  LsLinkList.prototype.toString = function() {
+    return '[object Array]';
+  }
+ */
 
   var LocalStorageDB = function() {
 
@@ -11,24 +16,30 @@ define(function() {
 
   LocalStorageDB.prototype = {
 
-    load: function(key, noEntryCallback) {
+    load: function(key, noEntryCallback, options) {
+      this.options = options || {};
       var storableMeta = this._get(key);
 
       if(storableMeta) {
-        return this._makeArrayLike(storableMeta);
+        return this._makeArrayLike(storableMeta, options);
       }
 
       var array = noEntryCallback();
-      if (array.$then) {
+      console.log(array);
+      if (array.$promise) {
         //Handle promise
-        array.$then(function(response) {
-          this._storeArray(key, response.data);
-          return response;
+        array.$promise = array.$promise.then(function(result) {
+          console.log(result[0]);
+          this._storeArray(key, result);
+          result = this._postProcessArray(result);
+          console.log(result[0]);
+          return result;
         }.bind(this));
+        return array;
       } else {
         this._storeArray(key, array);
+        return this._postProcessArray(array);
       }
-      return array;
     },
 
     _getEntryKey: function(key, entry) {
@@ -36,25 +47,46 @@ define(function() {
     },
 
     _storeArray: function(key, array) {
+      if(!array || array.length === 0) {
+        return;
+      }
+
       var previous;
       array.map(function(entry) {
+        entry._key = this._getEntryKey(key, entry);
         if(previous) {
-          previous._llNextKey = this._getEntryKey(key, entry);
+          previous._llNextKey = entry._key;
         }
         previous = entry;
         return entry;
       }, this).forEach(function(entry) {
-        localStorage.setItem(this._getEntryKey(key, entry), JSON.stringify(entry));
+        localStorage.setItem(entry._key, JSON.stringify(entry));
       }, this);
 
       localStorage.setItem(key, JSON.stringify({
         length: array.length,
-        firstKey: (array[0] ? this._getEntryKey(key, array[0]) : null)
+        firstKey: (array[0] ? array[0]._key : null)
       }));
     },
 
-    _makeArrayLike: function(storableMeta) {
-      var first = this._get(storableMeta.firstKey);
+    _postProcess: function(entry) {
+      if(this.options.postProcess) {
+        var postProcessed = this.options.postProcess(entry);
+        postProcessed._llNextKey = entry._llNextKey;
+        return postProcessed;
+      } else {
+        return entry;
+      }
+    },
+
+    _postProcessArray: function(array) {
+      return array.map(function(entry) {
+        return this._postProcess(entry);
+      }, this);
+    },
+
+    _makeArrayLike: function(storableMeta, options) {
+      var first = this._getItem(storableMeta.firstKey);
       var retrievedEntries = {
         0: first
       }
@@ -63,7 +95,7 @@ define(function() {
       arrayLike[0] = first;
       arrayLike.length = storableMeta.length;
 
-      var lsGet = this._get;
+      var lsGet = this._getItem.bind(this);
       for(var i = 1; i < storableMeta.length; i++) {
         (function(index) {
           Object.defineProperty(arrayLike, index, {
@@ -82,7 +114,15 @@ define(function() {
         })(i);
       }
 
+      //TODO remove
+      window.debugArray = arrayLike;
       return arrayLike;
+    },
+
+    _getItem: function(key) {
+      return this._postProcess(
+        this._get(key)
+      );
     },
 
     _get: function(key) {

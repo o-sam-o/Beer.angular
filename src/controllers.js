@@ -6,19 +6,6 @@ define(['angular', 'app', 'beer-model', 'filters'], function(angular, app, Photo
                    function PhotoListCtrl($scope, photoService) {
                      $scope.sortOrder = 'alpha'
                      $scope.photos = photoService.getPhotos();
-
-                     //TODO refactor this as it's super ugly
-                     if($scope.photos.$then) {
-                       $scope.photos.$then(function(response) {
-                         $scope.photos = response.data.map(function(photo) {
-                           return new PhotoSummary(photo);
-                         });
-                       });
-                     } else {
-                       $scope.photos = $scope.photos.map(function(photo) {
-                         return new PhotoSummary(photo);
-                       });
-                     }
                    }
                   );
 
