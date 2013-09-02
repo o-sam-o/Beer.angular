@@ -1,5 +1,5 @@
 //TODO remove beer-model dependency
-define(['angular', 'app', 'beer-model', 'filters'], function(angular, app, PhotoSummary) {
+define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(angular, app) {
   'use strict';
 
   app.controller('PhotoListCtrl', 
