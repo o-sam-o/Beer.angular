@@ -1,7 +1,7 @@
 <section class="beer-items" ng-cloak ng-controller="PhotoListCtrl">
   <div class="row">
     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 beer-item" 
-      ng-repeat="photo in photos | arrayListLimitTo:54">
+      ng-repeat="photo in photos | arrayLikeLimitTo:54">
       <a href="#/photos/{{photo.getId()}}">
         <figure class="thumbnail">
           <img alt="{{photo.getTitle()}}" ng-src="{{photo.getSmallUrl()}}" width="{{photo.getSmallWidth()}}" height="{{photo.getSmallHeight()}}">
