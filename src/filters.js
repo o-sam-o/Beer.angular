@@ -18,9 +18,9 @@ define(['angular'], function(angular) {
   });
 
   filterModule.filter('arrayLikeLimitTo', function() {
-    return function(input, limit) {
+    return function(input, offset, pageSize) {
       if(input && input.slice) {
-        return input.slice(0, limit);
+        return input.slice(offset, offset + pageSize);
       } else {
         return input;
       }

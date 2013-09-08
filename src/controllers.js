@@ -3,8 +3,10 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
   'use strict';
 
   app.controller('PhotoListCtrl', 
-                   function PhotoListCtrl($scope, photoService) {
-                     $scope.sortOrder = 'alpha'
+                   function PhotoListCtrl($scope, $routeParams, photoService) {
+                     $scope.pageSize = 54;
+                     $scope.sortBy = $routeParams.sortBy || 'alpha';
+                     $scope.offset = $routeParams.offset ? parseInt($routeParams.offset, 10) : 0;
                      $scope.photos = photoService.getPhotos();
                    }
                   );
