@@ -4,21 +4,6 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
   var API_KEY = "ef9ad4ef689af505cde45ec1dc31120f";
   var PHOTOSET_ID = "72157625277593652";
 
-  //TODO delete PhotoModel ... it should be merged with PhotoSummary
-  var PhotoModel = function(attr) {
-    this.attr = attr;
-  }
-  PhotoModel.prototype = {
-    getTitle: function() {
-      return this.attr.title._content;
-    },
-
-    getMediumUrl: function() {
-      //TODO
-      return '';
-    }
-  };
-
   services.factory('photoService', function($resource, LocalStorageDB) {
     var lsDB = new LocalStorageDB({
       key: 'photoStream',

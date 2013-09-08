@@ -18,6 +18,10 @@ define(function() {
       return this.attr.url_s;
     },
 
+    getMediumUrl: function() {
+      return this.attr.url_m;
+    },
+
     getSmallWidth: function() {
       return this.attr.width_s;
     },
