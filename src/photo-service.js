@@ -19,7 +19,17 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
     }
   };
 
-  services.factory('photoService', function($resource, linkedList) {
+  services.factory('photoService', function($resource, LocalStorageDB) {
+    var lsDB = new LocalStorageDB({
+      key: 'photoStream',
+      loadList: function() {
+        return Photo.query({photoset_id: PHOTOSET_ID});
+      }, 
+      postProcess: function(entry) {
+        return new PhotoSummary(entry);
+      }
+    });
+
     var photos = null;
     var Photo = $resource('http://api.flickr.com/services/rest/', 
                           {
@@ -51,17 +61,11 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
 
                           return {
                             getPhotos: function() {
-                              photos = photos || linkedList.load('photoStream', function() {
-                                return Photo.query({photoset_id: PHOTOSET_ID});
-                              }, {
-                                postProcess: function(entry) {
-                                  return new PhotoSummary(entry);
-                                }
-                              });
+                              photos = photos || lsDB.getList();
                               return photos;
                               },
                               getPhoto: function(id) {
-                                return new PhotoModel(Photo.get({photo_id: id}));
+                                return lsDB.getById(id);
                               }
                             };
                           });

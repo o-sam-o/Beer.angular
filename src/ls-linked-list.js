@@ -2,42 +2,45 @@ define(['services'], function(services) {
   'use strict';
 
   // Note: I am just playing around here, this things it totally more trouble then it's worth
-  services.factory('linkedList', function($q) {
+  services.factory('LocalStorageDB', function($q) {
 
     var LsLinkList = function() {
     }
     LsLinkList.prototype = new Array;
 
-    var LocalStorageDB = function() {
-
+    var LocalStorageDB = function(options) {
+      this.options = options || {};
     }
 
     LocalStorageDB.prototype = {
 
-      load: function(key, noEntryCallback, options) {
-        this.options = options || {};
-        var storableMeta = this._get(key);
+      getList: function() {
+        var storableMeta = this._get(this.options.key);
 
         if(storableMeta) {
-          return this._makeArrayLike(storableMeta, options);
+          return this._makeArrayLike(storableMeta);
         }
 
-        var array = noEntryCallback();
+        var array = this.options.loadList();
         if (array.$promise) {
           //Handle promise
           return array.$promise.then(function(result) {
-            this._storeArray(key, result);
+            this._storeArray(this.options.key, result);
             result = this._postProcessArray(result);
             return $q.when(result);
           }.bind(this));
         } else {
-          this._storeArray(key, array);
+          this._storeArray(this.options.key, array);
           return this._postProcessArray(array);
         }
       },
 
       _getEntryKey: function(key, entry) {
-        return '_ll_' + key + '_' + entry.id;
+        return this._getKey(entry.id);
+      },
+
+      _getKey: function(key, id) {
+        return '_ll_' + key + '_' + id;
       },
 
       _storeArray: function(key, array) {
@@ -64,7 +67,7 @@ define(['services'], function(services) {
       },
 
       _postProcess: function(entry) {
-        if(this.options.postProcess) {
+        if(entry && this.options.postProcess) {
           var postProcessed = this.options.postProcess(entry);
           postProcessed._llNextKey = entry._llNextKey;
           return postProcessed;
@@ -79,7 +82,7 @@ define(['services'], function(services) {
         }, this);
       },
 
-      _makeArrayLike: function(storableMeta, options) {
+      _makeArrayLike: function(storableMeta) {
         var first = this._getItem(storableMeta.firstKey);
         var retrievedEntries = {
           0: first
@@ -121,9 +124,14 @@ define(['services'], function(services) {
 
       _get: function(key) {
         return JSON.parse(localStorage.getItem(key));
+      },
+
+      getById: function(id) {
+        //TODO handle load failure
+        return this._getItem(this._getKey(id));
       }
     }
 
-    return new LocalStorageDB();
+    return LocalStorageDB;
   });
 });
