@@ -1,4 +1,8 @@
 <div class="beer-detail" ng-cloak ng-controller="PhotoDetailCtrl">
+  <ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li class="active">{{photo.getTitle()}}</li>
+  </ol>
   <div class="row">
     <div class="col-md-4">
       <img class="thumbnail" alt="{{photo.getTitle()}}" ng-src="{{photo.getMediumUrl()}}">
