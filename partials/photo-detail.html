@@ -1,5 +1,16 @@
 <div class="beer-detail" ng-cloak ng-controller="PhotoDetailCtrl">
-  <h2>{{photo.getTitle()}}</h2>
-  <img alt="{{photo.getTitle()}}" ng-src="{{photo.getMediumUrl()}}">
+  <div class="row">
+    <div class="col-md-4">
+      <img class="thumbnail" alt="{{photo.getTitle()}}" ng-src="{{photo.getMediumUrl()}}">
+    </div>
+    <div class="col-md-6">
+      <dl>
+        <dt ng-show="{{photo.getBrewer()}}">Brewer:</dt>
+        <dd ng-show="{{photo.getBrewer()}}">{{photo.getBrewer()}}</dd>
+        <dt>Name:</dt>
+        <dd>{{photo.getName()}}</dd>
+      </dl>
+      <a href="http://www.flickr.com/photos/cavenagh/{{photo.getId()}}" class="btn btn-primary btn-lg">Flickr</a>
+    </div>
 </div>
 
