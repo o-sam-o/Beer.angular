@@ -36,6 +36,13 @@ define(function() {
       return this._detailedAttr('description');
     },
 
+    getDateTaken: function() {
+      var v = this._detailedAttr('dates');
+      if(v) {
+        return new Date(v.taken);
+      }
+    },
+
     _detailedAttr: function(name) {
       if(this.attr.detailed) {
         var v = this.attr.detailed[name];
