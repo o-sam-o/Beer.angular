@@ -32,6 +32,21 @@ define(function() {
       }
     },
 
+    getDescription: function() {
+      return this._detailedAttr('description');
+    },
+
+    _detailedAttr: function(name) {
+      if(this.attr.detailed) {
+        var v = this.attr.detailed[name];
+        if(v) {
+          return '_content' in v ? v._content : v;
+        }
+      }
+
+      return null;
+    },
+
     getSmallUrl: function() {
       return this.attr.url_s;
     },

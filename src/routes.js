@@ -6,7 +6,8 @@ define(['angular', 'app', 'controllers'], function(angular, app) {
       when('/photos/:sortBy/:offset', {templateUrl: 'partials/photo-list.html',   controller: 'PhotoListCtrl'}).
       when('/photos', {templateUrl: 'partials/photo-list.html',   controller: 'PhotoListCtrl'}).
       when('/photos/:photoId', {templateUrl: 'partials/photo-detail.html', controller: 'PhotoDetailCtrl'}).
-      otherwise({redirectTo: '/photos'});
+      when('/', {templateUrl: 'partials/photo-list.html',   controller: 'PhotoListCtrl'}).
+      otherwise({redirectTo: '/'});
   }]);
 
 });

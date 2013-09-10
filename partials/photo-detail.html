@@ -13,6 +13,8 @@
         <dd ng-show="photo.getBrewer()">{{photo.getBrewer()}}</dd>
         <dt>Name:</dt>
         <dd>{{photo.getName()}}</dd>
+        <dt ng-show="photo.getDescription()">Description:</dt>
+        <dd ng-show="photo.getDescription()">{{photo.getDescription()}}</dd>
       </dl>
       <a href="http://www.flickr.com/photos/cavenagh/{{photo.getId()}}" class="btn btn-primary btn-lg">Flickr</a>
     </div>

@@ -11,6 +11,9 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
         return Photo.query({photoset_id: PHOTOSET_ID});
       }, 
       postProcess: function(entry) {
+        if(!entry.detailed) {
+          entry.detailed = Photo.get({photo_id: entry.id});
+        }
         return new PhotoSummary(entry);
       }
     });
