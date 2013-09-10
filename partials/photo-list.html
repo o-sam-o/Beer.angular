@@ -7,7 +7,8 @@
   <div class="row">
     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 beer-item" 
       ng-repeat="photo in photos | arrayLikeLimitTo:offset:pageSize">
-      <a href="#/photos/{{photo.getId()}}">
+      <a href="#/photos/{{photo.getId()}}"
+        ng-mouseover="prefetchDetailPage(photo)">
         <figure class="thumbnail">
           <img alt="{{photo.getTitle()}}" ng-src="{{photo.getSmallUrl()}}" width="{{photo.getSmallWidth()}}" height="{{photo.getSmallHeight()}}">
           <figcaption style="display: none;">{{photo.getTitle()}}</figcaption>

@@ -8,6 +8,9 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                      $scope.sortBy = $routeParams.sortBy || 'alpha';
                      $scope.offset = $routeParams.offset ? parseInt($routeParams.offset, 10) : 0;
                      $scope.photos = photoService.getPhotos();
+                     $scope.prefetchDetailPage = function(photo) {
+                       (new Image()).src = photo.getMediumUrl();
+                     }
                    }
                   );
 
