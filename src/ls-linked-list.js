@@ -57,7 +57,7 @@ define(['services'], function(services) {
           previous = entry;
           return entry;
         }, this).forEach(function(entry) {
-          localStorage.setItem(entry._key, JSON.stringify(entry));
+          this.store(entry);
         }, this);
 
         localStorage.setItem(key, JSON.stringify({
@@ -129,6 +129,10 @@ define(['services'], function(services) {
       getById: function(id) {
         //TODO handle load failure
         return this._getItem(this._getKey(id));
+      },
+
+      store: function(entry) {
+        localStorage.setItem(entry._key, JSON.stringify(entry));
       }
     }
 

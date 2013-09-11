@@ -11,10 +11,18 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
         return Photo.query({photoset_id: PHOTOSET_ID});
       }, 
       postProcess: function(entry) {
-        if(!entry.detailed) {
-          entry.detailed = Photo.get({photo_id: entry.id});
+        var model = new PhotoSummary(entry);
+        model.prepDetailPage = function() {
+          if(!entry.detailed) {
+            entry.detailed = Photo.get({photo_id: entry.id});
+            if(entry.detailed.$promise) {
+              entry.detailed.$promise.then(function() {
+                lsDB.store(entry);
+              });
+            }
+          }
         }
-        return new PhotoSummary(entry);
+        return model;
       }
     });
 
