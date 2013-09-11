@@ -10,7 +10,7 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                      $scope.photos = photoService.getPhotos();
                      $scope.prefetchDetailPage = function(photo) {
                        (new Image()).src = photo.getMediumUrl();
-                       photo.prefetchDetailPage();
+                       photo.prepDetailPage();
                      }
                    }
                   );
@@ -19,7 +19,7 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                    function PhotoDetailCtrl($scope, $routeParams, photoService) {
                      $scope.photoId = $routeParams.photoId;
                      $scope.photo = photoService.getPhoto($scope.photoId);
-                     $scope.photo.prefetchDetailPage();
+                     $scope.photo.prepDetailPage();
                    }
                   );
 

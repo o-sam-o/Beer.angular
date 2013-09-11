@@ -4,6 +4,7 @@
 </section>
 
 <section class="beer-items" ng-cloak ng-controller="PhotoListCtrl">
+
   <div class="row">
     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 beer-item" 
       ng-repeat="photo in photos | arrayLikeLimitTo:offset:pageSize">
@@ -16,6 +17,18 @@
       </a>
     </div>
   </div>
+
+  <!-- Loading indicator for when nothing in local storage -->
+  <div class="row" ng-hide="photos">
+    <div class="col-md-offset-4 col-md-4">
+      <div class="progress progress-striped active">
+        <div class="progress-bar"  role="progressbar" style="width: 100%">
+          <span class="sr-only">Loading</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <ul class="pager">
     <li class="previous {{offset == 0 ? 'disabled' : ''}}">
       <a href="#/photos/{{sortBy}}/{{max(0, offset - pageSize)}}">&larr; Older</a>
