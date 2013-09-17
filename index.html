@@ -45,7 +45,14 @@
             <li><a href="#about">About</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
+
+            <form class="navbar-form" ng-controller="SearchFormCtrl" ng-submit="doSearch();">
+              <div class="form-group">
+                <input type="search" placeholder="Search" ng-model="searchTerm" class="form-control">
+              </div>
+            </form>
+
+            <li class="dropdown" style="display: none">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Date Added<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#">Date Added</a></li>
