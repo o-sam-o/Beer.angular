@@ -9,6 +9,7 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                      $scope.offset = $routeParams.offset ? parseInt($routeParams.offset, 10) : 0;
 
                      if($location.search().q) {
+                       console.log('Search for ' + $location.search().q);
                        $scope.photos = [];
                        photoService.search({term: $location.search().q}).then(
                          function(value) {
@@ -38,8 +39,8 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                   );
 
     app.controller('SearchFormCtrl', 
-                   function SearchFormCtrl($scope, $routeParams, $location) {
-                     $scope.searchTerm = $routeParams.searchTerm || '';
+                   function SearchFormCtrl($scope, $location) {
+                     $scope.searchTerm = $location.search().q || '';
                      $scope.doSearch = function() {
                        $location.search('q', $scope.searchTerm);
                      };
