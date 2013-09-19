@@ -14,6 +14,9 @@ require.config({
       },
       'angular-resource': {
         dep: ['angular']
+      },
+      'angular-route': {
+        dep: ['angular']
       }
     }
 });
