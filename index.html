@@ -42,7 +42,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
+            <li><a href="#about" data-toggle="modal" data-target="#about-modal">About</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
 
@@ -79,6 +79,32 @@
     </div>
 
     </div> <!-- /container -->
+
+    <div class="modal fade" id="about-modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">About</h4>
+          </div>
+          <div class="modal-body">
+            <h4>The Premise</h4>
+            <p>Create a photographic collection of beer bottles (ideally that I have drunk).
+            While I try to ensure the label is readable, image quality is not a priority.
+            Most photos are taken with my phone and often in poor lighting conditions.
+            The same beer is allowed to feature multiple times in the collection if there is some kind
+            of variation in the bottle.</p>
+            <h4>Contact</h4>
+            <p>Feel free to <a href="mailto:cavenaghweb@hotmail.com">email me</a></p>
+          </div>
+          <div class="modal-footer">
+            <a href="http://o-sam-o.github.com" class="btn btn-primary">Other Sites</a>
+            <a href="http://www.flickr.com/photos/cavenagh" class="btn btn-default">More Photos</a>
+            <a href="https://github.com/o-sam-o/Beer.angular" class="btn btn-default">Source</a>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <script data-main="src/main" src="lib/require.js"></script>
 
