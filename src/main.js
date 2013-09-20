@@ -9,6 +9,7 @@ require.config({
     },
     shim: {
       angular : {'exports' : 'angular'},
+      jquery : {'exports' : '$'},
       bootstrap: {
         dep: ['jquery']
       },
@@ -23,7 +24,7 @@ require.config({
 
 window.name = "NG_DEFER_BOOTSTRAP!";
 
-require(['angular', 'app', 'routes'], function(angular, app) {
+require(['angular', 'app', 'routes', 'jquery', 'bootstrap'], function(angular, app) {
   // Source : https://github.com/tnajdek/angular-requirejs-seed/blob/master/app/js/main.js
   var $html = angular.element(document.getElementsByTagName('html')[0]);
 
