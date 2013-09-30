@@ -22,6 +22,20 @@ The Tech
 --------
 TODO
 
+TODO
+----
+* Fix bug that search doesnt work first time the page is loaded
+* Add a refresh button 
+* Add auto refresh
+* Handle null search results
+* Change Jumbo / header for search results
+* Support sorting by different orders
+* Add map
+* Fix JS error on detail page
+* Add endless scroll
+* Make landscape on phone 3 images wide
+* Add offline support
+
 Licence
 -------
 MIT
