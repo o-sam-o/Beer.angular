@@ -10,14 +10,13 @@ require.config({
     shim: {
       angular : {'exports' : 'angular'},
       bootstrap: {
-        dep: ['jquery'],
-        exports: "$.fn.popover"
+        deps: ['jquery']
       },
       'angular-resource': {
-        dep: ['angular']
+        deps: ['angular']
       },
       'angular-route': {
-        dep: ['angular']
+        deps: ['angular']
       }
     }
 });
