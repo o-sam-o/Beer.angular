@@ -7,20 +7,32 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                      $scope.pageSize = 54;
                      $scope.sortBy = $routeParams.sortBy || 'alpha';
                      $scope.offset = $routeParams.offset ? parseInt($routeParams.offset, 10) : 0;
+                     $scope.loading = false;
 
                      if($location.search().q) {
                        console.log('Search for ' + $location.search().q);
+                       $scope.loading = true;
                        $scope.photos = [];
                        photoService.search({term: $location.search().q}).then(
                          function(value) {
+                         $scope.loading = false;
                          console.log('success complete');
                        }, function() {
-                         console.log('search error');
+                         alert('search error');
                        }, function(value) {
                          $scope.photos.push(value);
                        });
                      } else {
                        $scope.photos = photoService.getPhotos();
+                       if($scope.photos.then) {
+                           $scope.loading = true;
+                           $scope.photos.then(function() {
+                               $scope.loading = false;
+                               console.log('loading complete');
+                           }, function() {
+                               alert('Load error');
+                           });
+                       }
                      }
 
                      $scope.prefetchDetailPage = function(photo) {

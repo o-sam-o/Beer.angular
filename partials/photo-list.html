@@ -20,13 +20,21 @@
   </div>
 
   <!-- Loading indicator for when nothing in local storage -->
-  <div class="row" ng-hide="photos.length">
+  <div class="row" ng-show="photos.length === 0 && loading">
     <div class="col-md-offset-4 col-md-4">
       <div class="progress progress-striped active">
         <div class="progress-bar"  role="progressbar" style="width: 100%">
           <span class="sr-only">Loading</span>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="row" ng-show="photos.length === 0 && !loading">
+    <div class="col-md-offset-4 col-md-4">
+        <div class="alert alert-warning">
+            No photos found ... :(
+        </div>
     </div>
   </div>
 

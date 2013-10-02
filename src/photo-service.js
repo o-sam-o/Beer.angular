@@ -51,6 +51,10 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
             nextKey = sendDataToWorker(nextKey);
             if(nextKey) {
               loadInTimeout(nextKey);
+            } else {
+              searchWorker.postMessage({
+                type: 'indexDone'
+              });
             }
           }, 5);
       };
@@ -63,8 +67,12 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
     })();
     var searchResult;
     searchWorker.addEventListener('message', function(e) {
-      var photo = wrapPhotoEntry(e.data);
-      searchResult.notify(photo);
+      if(e.data === 'searchFinished') {
+        searchResult.resolve();
+      } else {
+        var photo = wrapPhotoEntry(e.data);
+        searchResult.notify(photo);
+      }
     }, false);
 
     var photos = null;
@@ -102,11 +110,11 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
                               return photos;
                               },
                               getPhoto: function(id) {
+                                //TODO handle not in lsDB
                                 return lsDB.getById(id);
                               },
                               search: function(query) {
                                 searchResult = $q.defer();
-                                //TODO need to post process the result
                                 searchWorker.postMessage({
                                   type: 'search',
                                   query: query

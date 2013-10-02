@@ -1,5 +1,6 @@
 var query = null;
 var alreadyReturned = null;
+var indexDone = false;
 var searchables = [];
 
 onmessage = function(oEvent) {
@@ -14,8 +15,12 @@ onmessage = function(oEvent) {
     case 'index': 
       doIndex(data.value)
       break;
+    case 'indexDone':
+        indexDone = true;
+        doSearch();
+        break;
     default:
-      throw 'Unknown message type ' + type;
+      throw 'Unknown message type ' + data.type;
   }
 }
 
@@ -30,6 +35,9 @@ var doSearch = function() {
       alreadyReturned.push(searchable);
     }
   });
+  if (indexDone) {
+      postMessage('searchFinished');
+  }
 }
 
 var doIndex = function(value) {

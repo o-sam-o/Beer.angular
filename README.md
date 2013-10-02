@@ -27,7 +27,6 @@ TODO
 * Fix bug that search doesnt work first time the page is loaded
 * Add a refresh button 
 * Add auto refresh
-* Handle null search results
 * Change Jumbo / header for search results
 * Support sorting by different orders
 * Add map
