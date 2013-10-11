@@ -50,6 +50,16 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                    }
                   );
 
+    app.controller('NavCtrl',
+                   function PhotoDetailCtrl($scope) {
+                       $scope.refresh = function() {
+                           console.log('refresh');
+                           localStorage.clear();
+                           location.reload();
+                       };
+                   }
+                  );
+
     app.controller('SearchFormCtrl', 
                    function SearchFormCtrl($scope, $location) {
                      $scope.searchTerm = $location.search().q || '';
