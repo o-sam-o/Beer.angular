@@ -25,6 +25,7 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                      } else {
                        $scope.photos = photoService.getPhotos();
                        if($scope.photos.then) {
+                           console.log("Loading images from Flickr");
                            $scope.loading = true;
                            $scope.photos.then(function() {
                                $scope.loading = false;

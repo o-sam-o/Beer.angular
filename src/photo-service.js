@@ -25,12 +25,12 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
     lsDB = new LocalStorageDB({
       key: LS_KEY,
       loadList: function() {
-        //TODO pass values to search worker
         return Photo.query({photoset_id: PHOTOSET_ID});
       },
       postProcess: wrapPhotoEntry
     });
 
+    var doSearchIndex;
     var searchWorker = new Worker('src/search-worker.js');
     //Book strap worker index
     (function() {
@@ -56,14 +56,17 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
                 type: 'indexDone'
               });
             }
-          }, 5);
+          }, 3);
       };
 
-      var lsMeta = get(LS_KEY);
-      if(lsMeta) {
-        var nextKey = lsMeta.firstKey;
-        loadInTimeout(nextKey);
-      }
+     doSearchIndex = function() {
+        var lsMeta = get(LS_KEY);
+        if(lsMeta) {
+          var nextKey = lsMeta.firstKey;
+          loadInTimeout(nextKey);
+        }
+     }
+     doSearchIndex();
     })();
     var searchResult;
     searchWorker.addEventListener('message', function(e) {
@@ -106,8 +109,13 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
 
                           return {
                             getPhotos: function() {
-                              photos = photos || lsDB.getList();
-                              return photos;
+                                photos = photos || lsDB.getList();
+                                if(photos.then) {
+                                    photos.then(function() {
+                                        doSearchIndex();
+                                    });
+                                }
+                                return photos;
                               },
                               getPhoto: function(id) {
                                 //TODO handle not in lsDB

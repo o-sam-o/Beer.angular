@@ -1,6 +1,7 @@
 var query = null;
 var alreadyReturned = null;
 var indexDone = false;
+// Ideally we woudn't have to do this and we could access the localstorage directly ...
 var searchables = [];
 
 onmessage = function(oEvent) {
@@ -16,9 +17,9 @@ onmessage = function(oEvent) {
       doIndex(data.value)
       break;
     case 'indexDone':
-        indexDone = true;
-        doSearch();
-        break;
+      indexDone = true;
+      doSearch();
+      break;
     default:
       throw 'Unknown message type ' + data.type;
   }
