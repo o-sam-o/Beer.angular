@@ -24,16 +24,18 @@ TODO
 
 TODO
 ----
-* Fix bug that search doesnt work first time the page is loaded
-* Add a refresh button 
 * Add auto refresh
-* Change Jumbo / header for search results
 * Support sorting by different orders
-* Add map
+* Add map where photo was taken
 * Fix JS error on detail page
 * Add endless scroll
 * Make landscape on phone 3 images wide
 * Add offline support
+* Opening the about dialog takes you back to the gateway
+* Page number doesnt reset when creating a new search request
+* Search doesnt work when done from a detail page
+* Should have brewer pages, detail page should link to brewer pages and
+  include the brewer pages in the breadcrumbs
 
 Licence
 -------

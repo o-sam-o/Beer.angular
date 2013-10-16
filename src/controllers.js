@@ -8,12 +8,13 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                      $scope.sortBy = $routeParams.sortBy || 'alpha';
                      $scope.offset = $routeParams.offset ? parseInt($routeParams.offset, 10) : 0;
                      $scope.loading = false;
+                     $scope.searchTerm = $location.search().q;
 
-                     if($location.search().q) {
-                       console.log('Search for ' + $location.search().q);
+                     if($scope.searchTerm) {
+                       console.log('Search for ' + $scope.searchTerm);
                        $scope.loading = true;
                        $scope.photos = [];
-                       photoService.search({term: $location.search().q}).then(
+                       photoService.search({term: $scope.searchTerm}).then(
                          function(value) {
                          $scope.loading = false;
                          console.log('success complete');

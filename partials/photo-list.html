@@ -1,12 +1,17 @@
-<div ng-cloak ng-controller="PhotoListCtrl">
-<section class="jumbotron">
+<div ng-controller="PhotoListCtrl">
+<section class="jumbotron" ng-hide="searchTerm">
   <h1>Beer, Beer, Beer!</h1>
   <p>My photo collection of beer bottles. Which currently contains <span id="bottle-count">{{photos.length}}</span> photos.</p>
 </section>
 
+<section ng-show="searchTerm">
+  <h2>"{{searchTerm}}" Beers</h2>
+  <hr/>
+</section>
+
 <section class="beer-items">
 
-  <div class="row">
+  <div class="row" ng-cloak>
     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 beer-item" 
       ng-repeat="photo in photos | arrayLikeLimitTo:offset:pageSize">
       <a href="#/photos/{{photo.getId()}}"
