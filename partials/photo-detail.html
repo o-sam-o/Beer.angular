@@ -15,8 +15,8 @@
         <dd>{{photo.getName()}}</dd>
         <dt ng-show="photo.getDescription()">Description:</dt>
         <dd ng-show="photo.getDescription()">{{photo.getDescription()}}</dd>
-        <dt ng-show="photo.getDateTaken()">Taken:</dt>
-        <dd ng-show="photo.getDateTaken()">
+        <dt ng-show="photo.getDateTaken() != null">Taken:</dt>
+        <dd ng-show="photo.getDateTaken() != null">
           {{photo.getDateTaken()|date:'shortTime'}} - {{photo.getDateTaken()|date:'fullDate'}}
         </dd>
       </dl>
