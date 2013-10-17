@@ -12,7 +12,7 @@
 <section class="beer-items">
 
   <div class="row" ng-cloak>
-    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 beer-item" 
+    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-6 beer-item" 
       ng-repeat="photo in photos | arrayLikeLimitTo:offset:pageSize">
       <a href="#/photos/{{photo.getId()}}"
         ng-mouseover="prefetchDetailPage(photo)">
