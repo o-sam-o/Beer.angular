@@ -30,8 +30,6 @@ TODO
 * Add endless scroll
 * Make landscape on phone 3 images wide
 * Add offline support
-* Page number doesnt reset when creating a new search request
-* Search doesnt work when done from a detail page
 * Should have brewer pages, detail page should link to brewer pages and
   include the brewer pages in the breadcrumbs
 * Can't refresh on the detail page (or land on the detail page without

@@ -66,7 +66,7 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                    function SearchFormCtrl($scope, $location) {
                      $scope.searchTerm = $location.search().q || '';
                      $scope.doSearch = function() {
-                       $location.search('q', $scope.searchTerm);
+                       $location.url('/?q=' + $scope.searchTerm);
                      };
                    }
                   );
