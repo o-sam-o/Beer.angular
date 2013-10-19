@@ -28,10 +28,7 @@ TODO
 * Support sorting by different orders
 * Add map where photo was taken
 * Add endless scroll
-* Make landscape on phone 3 images wide
 * Add offline support
-* Should have brewer pages, detail page should link to brewer pages and
-  include the brewer pages in the breadcrumbs
 * Can't refresh on the detail page (or land on the detail page without
   going to the gateway first
 

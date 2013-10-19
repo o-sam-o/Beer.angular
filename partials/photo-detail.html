@@ -1,7 +1,8 @@
 <div class="beer-detail" ng-cloak ng-controller="PhotoDetailCtrl">
   <ol class="breadcrumb">
     <li><a href="#">Home</a></li>
-    <li class="active">{{photo.getTitle()}}</li>
+    <li ng-show="photo.getBrewer()"><a href="/#/?q={{photo.getBrewer()}}">{{photo.getBrewer()}}</a></li>
+    <li class="active">{{photo.getName()}}</li>
   </ol>
   <div class="row">
     <div class="col-md-4">
@@ -10,7 +11,9 @@
     <div class="col-md-4">
       <dl>
         <dt ng-show="photo.getBrewer()">Brewer:</dt>
-        <dd ng-show="photo.getBrewer()">{{photo.getBrewer()}}</dd>
+        <dd ng-show="photo.getBrewer()">
+          <a href="/#/?q={{photo.getBrewer()}}">{{photo.getBrewer()}}</a>
+        </dd>
         <dt>Name:</dt>
         <dd>{{photo.getName()}}</dd>
         <dt ng-show="photo.getDescription()">Description:</dt>
