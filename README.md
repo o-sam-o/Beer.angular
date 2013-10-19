@@ -22,6 +22,10 @@ The Tech
 --------
 TODO
 
+Credit
+------
+* beer icon : [Visual Pharm](http://www.visualpharm.com)
+
 TODO
 ----
 * Add auto refresh
@@ -31,6 +35,8 @@ TODO
 * Add offline support
 * Can't refresh on the detail page (or land on the detail page without
   going to the gateway first
+* Add touch icon
+** Add support for Android chrome apping
 
 Licence
 -------
