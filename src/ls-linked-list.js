@@ -155,7 +155,7 @@ define(['services'], function(services) {
 
       getById: function(id) {
         //TODO handle load failure
-        return this._getItem(this._getKey(id));
+        return this._getItem(this._getKey(this.options.key, id));
       },
 
       store: function(entry) {
