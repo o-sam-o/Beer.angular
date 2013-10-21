@@ -37,10 +37,7 @@ define(function() {
     },
 
     getDateTaken: function() {
-      var v = this._detailedAttr('dates');
-      if(v) {
-        return new Date(v.taken);
-      }
+      return new Date(this.attr.datetaken);
     },
 
     _detailedAttr: function(name) {
@@ -72,6 +69,10 @@ define(function() {
 
     compareByTitle: function(other) {
       return (this.getTitle() < other.getTitle() ? -1 : (this.getTitle() > other.getTitle() ? 1 : 0));
+    },
+
+    compareByDateTaken: function(other) {
+      return (this.getDateTaken() < other.getDateTaken() ? -1 : (this.getDateTaken() > other.getDateTaken() ? 1 : 0));
     },
 
     toHash: function() {

@@ -5,7 +5,7 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
   app.controller('PhotoListCtrl', 
                    function PhotoListCtrl($scope, $routeParams, photoService, $location) {
                      $scope.pageSize = 54;
-                     $scope.sortBy = $routeParams.sortBy || 'alpha';
+                     $scope.sortBy = $routeParams.sortBy || 'dateTaken';
                      $scope.offset = $routeParams.offset ? parseInt($routeParams.offset, 10) : 0;
                      $scope.loading = false;
                      $scope.searchTerm = $location.search().q;
@@ -24,7 +24,7 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                          $scope.photos.push(value);
                        });
                      } else {
-                       $scope.photos = photoService.getPhotos();
+                       $scope.photos = photoService.getPhotos($scope.sortBy);
                        if($scope.photos.then) {
                            console.log("Loading images from Flickr");
                            $scope.loading = true;
@@ -52,15 +52,20 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                    }
                   );
 
-    app.controller('NavCtrl',
-                   function PhotoDetailCtrl($scope) {
-                       $scope.refresh = function() {
-                           console.log('refresh');
-                           localStorage.clear();
-                           location.reload();
-                       };
-                   }
-                  );
+  app.controller('NavCtrl',
+                 function PhotoDetailCtrl($routeParams, $scope, $location) {
+                   $scope.sortBy = $routeParams.sortBy || 'alphabetic';
+                   $scope.refresh = function() {
+                     console.log('refresh');
+                     localStorage.clear();
+                     location.reload();
+                   };
+                   $scope.doSort = function() {
+                     console.log('Do sort: ' + $scope.sortBy);
+                     $location.url('/photos/' + $scope.sortBy + '/0');
+                   };
+                 }
+                );
 
     app.controller('SearchFormCtrl', 
                    function SearchFormCtrl($scope, $location) {

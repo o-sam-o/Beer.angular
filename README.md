@@ -36,7 +36,9 @@ TODO
 * Can't refresh on the detail page (or land on the detail page without
   going to the gateway first
 * Add touch icon
+* Brewer breadcrumb doesnt work on github.io version of the site
 ** Add support for Android chrome apping
+* Prevent blank screen on page load
 
 Licence
 -------

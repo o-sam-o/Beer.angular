@@ -14,11 +14,11 @@ define(['services'], function(services) {
 
     LocalStorageDB.prototype = {
 
-      getList: function() {
+      getList: function(sortBy) {
         var storableMeta = this._get(this.options.key);
 
         if(storableMeta) {
-          return this._makeArrayLike(storableMeta);
+          return this._makeArrayLike(storableMeta, sortBy);
         }
 
         var array = this.options.loadList();
@@ -26,17 +26,17 @@ define(['services'], function(services) {
           //Handle promise
           return array.$promise.then(function(result) {
             this._storeArray(this.options.key, result);
-            result = this._postProcessArray(result);
+            result = this._postProcessArray(result, sortBy);
             return $q.when(result);
           }.bind(this));
         } else {
           this._storeArray(this.options.key, array);
-          return this._postProcessArray(array);
+          return this._postProcessArray(array, sortBy);
         }
       },
 
       _getEntryKey: function(key, entry) {
-        return this._getKey(entry.id);
+        return this._getKey(key, entry.id);
       },
 
       _getKey: function(key, id) {
@@ -49,20 +49,40 @@ define(['services'], function(services) {
         }
 
         var previous;
-        array.map(function(entry) {
+        array = array.map(function(entry) {
           entry._key = this._getEntryKey(key, entry);
+          entry._llNextKey = {};
           if(previous) {
-            previous._llNextKey = entry._key;
+            previous._llNextKey['default'] = entry._key;
           }
           previous = entry;
           return entry;
-        }, this).forEach(function(entry) {
+        }, this);
+
+        var firstKeys = {
+          default: array[0]._key
+        };
+
+        for(var sortKey in (this.options.sorters || {})) {
+          var sorter = this.options.sorters[sortKey];
+          previous = null;
+          //TODO use map or forEach?
+          array.sort(sorter).forEach(function(entry) {
+            if(previous) {
+              previous._llNextKey[sortKey] = entry._key;
+            }
+            previous = entry;
+          });
+          firstKeys[sortKey] = array[0]._key;
+        };
+
+        array.forEach(function(entry) {
           this.store(entry);
         }, this);
 
         localStorage.setItem(key, JSON.stringify({
           length: array.length,
-          firstKey: (array[0] ? array[0]._key : null)
+          firstKeys: firstKeys
         }));
       },
 
@@ -76,14 +96,21 @@ define(['services'], function(services) {
         }
       },
 
-      _postProcessArray: function(array) {
-        return array.map(function(entry) {
+      _postProcessArray: function(array, sortBy) {
+        if(sortBy && this.options.sorters && this.options.sorters[sortBy]) {
+          array.sort(this.options.sorters[sortBy]);
+        }
+
+        array = array.map(function(entry) {
           return this._postProcess(entry);
         }, this);
+
+        return array;
       },
 
-      _makeArrayLike: function(storableMeta) {
-        var first = this._getItem(storableMeta.firstKey);
+      _makeArrayLike: function(storableMeta, sortBy) {
+        sortBy = sortBy || 'default';
+        var first = this._getItem(storableMeta.firstKeys[sortBy]);
         var retrievedEntries = {
           0: first
         }
@@ -102,7 +129,7 @@ define(['services'], function(services) {
                 }
                 if(!retrievedEntries[index]) {
                   var previous = arrayLike[index - 1];
-                  retrievedEntries[index] = lsGet(previous._llNextKey);
+                  retrievedEntries[index] = lsGet(previous._llNextKey[sortBy]);
                 }
 
                 return retrievedEntries[index];

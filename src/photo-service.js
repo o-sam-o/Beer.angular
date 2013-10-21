@@ -27,9 +27,23 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
       loadList: function() {
         return Photo.query({photoset_id: PHOTOSET_ID});
       },
-      postProcess: wrapPhotoEntry
+      postProcess: wrapPhotoEntry,
+      sorters: {
+        dateTaken: function(p1, p2) {
+          //FIXME instanciating model instances here is hacky
+          p1 = new PhotoSummary(p1);
+          p2 = new PhotoSummary(p2);
+          return p2.compareByDateTaken(p1);
+        },
+        alphabetic: function(p1, p2) {
+          p1 = new PhotoSummary(p1);
+          p2 = new PhotoSummary(p2);
+          return p1.compareByTitle(p2);
+        }
+      }
     });
 
+    //FIXME this stuff should somehow live in the linked list
     var doSearchIndex;
     var searchWorker = new Worker('src/search-worker.js');
     //Book strap worker index
@@ -43,7 +57,7 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
           type: 'index',
           value: value
         });
-        return value._llNextKey;
+        return value._llNextKey['default'];
       };
 
       var loadInTimeout = function(nextKey) { 
@@ -62,7 +76,7 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
      doSearchIndex = function() {
         var lsMeta = get(LS_KEY);
         if(lsMeta) {
-          var nextKey = lsMeta.firstKey;
+          var nextKey = lsMeta.firstKeys['default'];
           loadInTimeout(nextKey);
         }
      }
@@ -108,8 +122,9 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
                           });
 
                           return {
-                            getPhotos: function() {
-                                photos = photos || lsDB.getList();
+                            getPhotos: function(sortBy) {
+                                //TODO add support for changing sortBy
+                                photos = photos || lsDB.getList(sortBy);
                                 if(photos.then) {
                                     photos.then(function() {
                                         doSearchIndex();
