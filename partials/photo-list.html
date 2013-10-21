@@ -45,10 +45,10 @@
 
   <ul class="pager">
     <li class="previous {{offset == 0 ? 'disabled' : ''}}">
-      <a href="#/photos/{{sortBy}}/{{max(0, offset - pageSize)}}">&larr; Older</a>
+      <a href="#/photos/{{sortBy}}/{{max(0, offset - pageSize)}}">&larr; Previous</a>
     </li>
     <li class="next {{offset + pageSize > photos.length ? 'disabled' : ''}}">
-      <a href="#/photos/{{sortBy}}/{{offset + pageSize}}">Newer &rarr;</a>
+      <a href="#/photos/{{sortBy}}/{{offset + pageSize}}">Next &rarr;</a>
     </li>
   </ul>
 </section>
