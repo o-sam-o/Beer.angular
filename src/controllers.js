@@ -2,10 +2,13 @@
 define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(angular, app) {
   'use strict';
 
+  var DEFAULT_SORT_BY = 'dateTaken';
+
   app.controller('PhotoListCtrl', 
                    function PhotoListCtrl($scope, $routeParams, photoService, $location) {
                      $scope.pageSize = 54;
-                     $scope.sortBy = $routeParams.sortBy || 'dateTaken';
+                     $scope.sortBy = $routeParams.sortBy || DEFAULT_SORT_BY;
+                     console.log('PhotListCtrl - ' + $scope.sortBy);
                      $scope.offset = $routeParams.offset ? parseInt($routeParams.offset, 10) : 0;
                      $scope.loading = false;
                      $scope.searchTerm = $location.search().q;
@@ -54,7 +57,7 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
 
   app.controller('NavCtrl',
                  function PhotoDetailCtrl($routeParams, $scope, $location) {
-                   $scope.sortBy = $routeParams.sortBy || 'alphabetic';
+                   $scope.sortBy = $routeParams.sortBy || DEFAULT_SORT_BY;
                    $scope.refresh = function() {
                      console.log('refresh');
                      localStorage.clear();
@@ -62,7 +65,7 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                    };
                    $scope.doSort = function() {
                      console.log('Do sort: ' + $scope.sortBy);
-                     $location.url('/photos/' + $scope.sortBy + '/0');
+                     $location.path('/photos/' + $scope.sortBy + '/0');
                    };
                  }
                 );
@@ -71,7 +74,7 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                    function SearchFormCtrl($scope, $location) {
                      $scope.searchTerm = $location.search().q || '';
                      $scope.doSearch = function() {
-                       $location.url('/?q=' + $scope.searchTerm);
+                       $location.path('/').search({q: $scope.searchTerm});
                      };
                    }
                   );

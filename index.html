@@ -48,13 +48,13 @@
             <li><a href="#" data-toggle="modal"
               data-target="#about-modal" onclick="return false">About</a></li>
             <li><a href="#" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span></a></li>
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown">Date Added<b class="caret"></b></a>
+            <li class="dropdown" ng-cloak>
+              <a class="dropdown-toggle" data-toggle="dropdown">{{sortBy|sortByDisplayName}}<b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#" ng-click="sortBy = 'dateTaken';doSort()">Date Added</a></li>
-                <li><a href="#" ng-click="sortBy = 'alphabetic';doSort()">Alphabetic</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Reverse Order</a></li>
+                <li><a href="" ng-click="sortBy = 'dateTaken';doSort()">Date Taken</a></li>
+                <li><a href="" ng-click="sortBy = 'alphabetic';doSort()">Alphabetic</a></li>
+                <li class="divider" style="display: none;"></li>
+                <li style="display: none;"><a href="#">Reverse Order</a></li>
               </ul>
             </li>
           </ul>

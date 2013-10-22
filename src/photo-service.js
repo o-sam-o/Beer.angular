@@ -92,7 +92,7 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
       }
     }, false);
 
-    var photos = null;
+    var photosSortedBy = {};
     Photo = $resource('http://api.flickr.com/services/rest/', 
                           {
                             api_key: API_KEY,
@@ -123,8 +123,8 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
 
                           return {
                             getPhotos: function(sortBy) {
-                                //TODO add support for changing sortBy
-                                photos = photos || lsDB.getList(sortBy);
+                                var photos = photosSortedBy[sortBy] || lsDB.getList(sortBy);
+                                photosSortedBy[sortBy] = photos;
                                 if(photos.then) {
                                     photos.then(function() {
                                         doSearchIndex();

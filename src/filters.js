@@ -27,5 +27,18 @@ define(['angular'], function(angular) {
     };
   });
 
+  filterModule.filter('sortByDisplayName', function() {
+    return function(input) {
+      switch (input) {
+      case 'alphabetic':
+        return 'Alphabetic';
+      case 'dateTaken':
+        return 'Date Taken';
+      default:
+        return input;
+      }
+    }
+  });
+
 });
 
