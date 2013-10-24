@@ -32,8 +32,6 @@ TODO
 * Add map where photo was taken
 * Add endless scroll
 * Add offline support
-* Add touch icon
-** Add support for Android chrome apping
 * Support reverse sort order
 * Scroll to correct position when returning from detail page
 * Refactor code ...
