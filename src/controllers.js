@@ -48,10 +48,25 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                   );
 
     app.controller('PhotoDetailCtrl', 
-                   function PhotoDetailCtrl($scope, $routeParams, photoService) {
+                   function PhotoDetailCtrl($scope, $routeParams, photoService, $location) {
                      $scope.photoId = $routeParams.photoId;
                      $scope.photo = photoService.getPhoto($scope.photoId);
-                     $scope.photo.prepDetailPage();
+                     $scope.loading = false;
+                     if(!$scope.photo) {
+                       //FIXME can see template when this happens
+                       alert('Photo not found');
+                       $location.path('/');
+                       return;
+                     } else if($scope.photo.then) {
+                       $scope.loading = true;
+                       $scope.photo.then(function(photo) {
+                         $scope.photo = photo;
+                         $scope.photo.prepDetailPage();
+                         $scope.loading = false;
+                       });
+                     } else {
+                      $scope.photo.prepDetailPage();
+                     }
                    }
                   );
 

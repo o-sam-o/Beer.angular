@@ -133,8 +133,21 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
                                 return photos;
                               },
                               getPhoto: function(id) {
-                                //TODO handle not in lsDB
-                                return lsDB.getById(id);
+                                var photo = lsDB.getById(id);
+                                if(!photo) {
+                                  var photos = lsDB.getList();
+                                  if(photos.then) {
+                                    console.log('Get by id but photos not loaded ...');
+
+                                    var deferred = $q.defer();
+                                    photos.then(function() {
+                                      deferred.resolve(lsDB.getById(id));
+                                      doSearchIndex();
+                                    });
+                                    photo = deferred.promise;
+                                  }
+                                }
+                                return photo;
                               },
                               search: function(query) {
                                 searchResult = $q.defer();

@@ -1,29 +1,42 @@
-<div class="beer-detail" ng-cloak ng-controller="PhotoDetailCtrl">
-  <ol class="breadcrumb">
-    <li><a href="#">Home</a></li>
-    <li ng-show="photo.getBrewer()"><a href="#/?q={{photo.getBrewer()}}">{{photo.getBrewer()}}</a></li>
-    <li class="active">{{photo.getName()}}</li>
-  </ol>
-  <div class="row">
-    <div class="col-md-4">
-      <img class="thumbnail" alt="{{photo.getTitle()}}" ng-src="{{photo.getMediumUrl()}}">
+<div ng-controller="PhotoDetailCtrl">
+  
+  <div id="init-page-loader" ng-show="loading">
+    <div class="col-md-offset-4 col-md-4">
+      <div class="progress progress-striped active">
+        <div class="progress-bar"  role="progressbar" style="width: 100%">
+          <span class="sr-only">Loading</span>
+        </div>
+      </div>
     </div>
-    <div class="col-md-4">
-      <dl>
-        <dt ng-show="photo.getBrewer()">Brewer:</dt>
-        <dd ng-show="photo.getBrewer()">
-          <a href="#/?q={{photo.getBrewer()}}">{{photo.getBrewer()}}</a>
-        </dd>
-        <dt>Name:</dt>
-        <dd>{{photo.getName()}}</dd>
-        <dt ng-show="photo.getDescription()">Description:</dt>
-        <dd ng-show="photo.getDescription()">{{photo.getDescription()}}</dd>
-        <dt ng-show="photo.getDateTaken() != null">Taken:</dt>
-        <dd ng-show="photo.getDateTaken() != null">
-          {{photo.getDateTaken()|date:'shortTime'}} - {{photo.getDateTaken()|date:'fullDate'}}
-        </dd>
-      </dl>
-      <a href="http://www.flickr.com/photos/cavenagh/{{photo.getId()}}" class="btn btn-primary btn-lg">Flickr</a>
-    </div>
-</div>
+  </div>
 
+  <div class="beer-detail" ng-cloak ng-hide="loading">
+    <ol class="breadcrumb">
+      <li><a href="#">Home</a></li>
+      <li ng-show="photo.getBrewer()"><a href="#/?q={{photo.getBrewer()}}">{{photo.getBrewer()}}</a></li>
+      <li class="active">{{photo.getName()}}</li>
+    </ol>
+    <div class="row">
+      <div class="col-md-4">
+        <img class="thumbnail" alt="{{photo.getTitle()}}" ng-src="{{photo.getMediumUrl()}}">
+      </div>
+      <div class="col-md-4">
+        <dl>
+          <dt ng-show="photo.getBrewer()">Brewer:</dt>
+          <dd ng-show="photo.getBrewer()">
+            <a href="#/?q={{photo.getBrewer()}}">{{photo.getBrewer()}}</a>
+          </dd>
+          <dt>Name:</dt>
+          <dd>{{photo.getName()}}</dd>
+          <dt ng-show="photo.getDescription()">Description:</dt>
+          <dd ng-show="photo.getDescription()">{{photo.getDescription()}}</dd>
+          <dt ng-show="photo.getDateTaken() != null">Taken:</dt>
+          <dd ng-show="photo.getDateTaken() != null">
+            {{photo.getDateTaken()|date:'shortTime'}} - {{photo.getDateTaken()|date:'fullDate'}}
+          </dd>
+        </dl>
+        <a href="http://www.flickr.com/photos/cavenagh/{{photo.getId()}}" class="btn btn-primary btn-lg">Flickr</a>
+      </div>
+  </div>
+
+</div>

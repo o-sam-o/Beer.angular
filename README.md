@@ -32,14 +32,13 @@ TODO
 * Add map where photo was taken
 * Add endless scroll
 * Add offline support
-* Can't refresh on the detail page (or land on the detail page without
-  going to the gateway first
 * Add touch icon
 ** Add support for Android chrome apping
 * Support reverse sort order
 * Scroll to correct position when returning from detail page
 * Refactor code ...
 * Hide pagination buttons when nothing to paginate
+* Pagination doesnt work with search results
 
 Licence
 -------
