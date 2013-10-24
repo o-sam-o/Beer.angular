@@ -36,9 +36,10 @@ TODO
   going to the gateway first
 * Add touch icon
 ** Add support for Android chrome apping
-* Prevent blank screen on page load
 * Support reverse sort order
+* Scroll to correct position when returning from detail page
 * Refactor code ...
+* Hide pagination buttons when nothing to paginate
 
 Licence
 -------

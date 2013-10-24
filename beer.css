@@ -24,6 +24,10 @@ body {
   top: 0; left: 0; bottom: 0; right: 0;
 }
 
+#init-page-loader {
+  padding: 80px 0;
+}
+
 @media (max-width: 1200px) {
   .beer-item figure {
     width: 150px;
