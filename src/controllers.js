@@ -81,6 +81,7 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                    $scope.doSort = function() {
                      console.log('Do sort: ' + $scope.sortBy);
                      $location.path('/photos/' + $scope.sortBy + '/0');
+                     $('.navbar-collapse').collapse('hide');
                    };
                  }
                 );
