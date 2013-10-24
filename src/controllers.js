@@ -90,6 +90,7 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                      $scope.searchTerm = $location.search().q || '';
                      $scope.doSearch = function() {
                        $location.path('/').search({q: $scope.searchTerm});
+                       $('.navbar-collapse').collapse('hide');
                      };
                    }
                   );
