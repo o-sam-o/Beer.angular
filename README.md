@@ -28,15 +28,14 @@ Credit
 
 TODO
 ----
+* Scroll to correct position when returning from detail page
+* Add endless scroll
 * Add auto refresh
 * Add map where photo was taken
-* Add endless scroll
 * Add offline support
 * Support reverse sort order
-* Scroll to correct position when returning from detail page
 * Refactor code ...
-* Hide pagination buttons when nothing to paginate
-* Pagination doesnt work with search results
+* Todo support ordering in search
 
 Licence
 -------

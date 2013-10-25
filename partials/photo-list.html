@@ -44,11 +44,11 @@
   </div>
 
   <ul class="pager">
-    <li class="previous {{offset == 0 ? 'disabled' : ''}}">
-      <a href="#/photos/{{sortBy}}/{{max(0, offset - pageSize)}}">&larr; Previous</a>
+    <li class="previous" ng-hide="offset == 0">
+    <a href="#/photos/{{sortBy}}/{{max(0, offset - pageSize)}}{{searchTerm ? '?q=' + searchTerm : ''}}">&larr; Previous</a>
     </li>
-    <li class="next {{offset + pageSize > photos.length ? 'disabled' : ''}}">
-      <a href="#/photos/{{sortBy}}/{{offset + pageSize}}">Next &rarr;</a>
+    <li class="next" ng-hide="(offset + pageSize) > photos.length">
+      <a href="#/photos/{{sortBy}}/{{offset + pageSize}}{{searchTerm ? '?q=' + searchTerm : ''}}">Next &rarr;</a>
     </li>
   </ul>
 </section>
