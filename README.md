@@ -1,7 +1,5 @@
 # Beer.angular
 
-**Work in progress ....**
-
 Overview
 --------
 [Angular](http://angularjs.org/) backed rendering of my [Flickr beer collection](http://www.flickr.com/photos/cavenagh/sets/72157625277593652/with/9631336651/).  
@@ -20,10 +18,16 @@ of variation in the bottle.
 
 The Tech
 --------
-TODO
+* [AngularJS](http://angularjs.org/)
+* [Bootscrap](http://getbootstrap.com/)
+* [RequireJS](http://requirejs.org/)
+* Local Storage
+    - Used to cache the photo details sourced from Flickr
+* Web worker
+    - Used for search
 
-Credit
-------
+Attribution
+-----------
 * beer icon : [Visual Pharm](http://www.visualpharm.com)
 
 TODO
