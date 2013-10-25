@@ -28,7 +28,6 @@ Credit
 
 TODO
 ----
-* Scroll to correct position when returning from detail page
 * Add endless scroll
 * Add auto refresh
 * Add map where photo was taken

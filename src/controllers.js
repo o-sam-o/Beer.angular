@@ -1,14 +1,25 @@
-//TODO remove beer-model dependency
-define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(angular, app) {
+define(['angular', 'app', 'filters', 'photo-service'], function(angular, app) {
   'use strict';
 
   var DEFAULT_SORT_BY = 'dateTaken';
+
+  // When you return from the detail page, we want to jump back to
+  // previous scroll location
+  var previousDetailPage = null;
+  app.run(function($rootScope, $location) {
+    $rootScope.$on('$routeChangeSuccess', function() {
+      var path = $location.$$path;
+      var photoRegex = /\/photos\/(\d+)/
+      if(path.match(photoRegex)) {
+        previousDetailPage = photoRegex.exec(path)[1];
+      }
+    });
+  });
 
   app.controller('PhotoListCtrl', 
                    function PhotoListCtrl($scope, $routeParams, photoService, $location) {
                      $scope.pageSize = 54;
                      $scope.sortBy = $routeParams.sortBy || DEFAULT_SORT_BY;
-                     console.log('PhotListCtrl - ' + $scope.sortBy);
                      $scope.offset = $routeParams.offset ? parseInt($routeParams.offset, 10) : 0;
                      $scope.loading = false;
                      $scope.searchTerm = $location.search().q;
@@ -39,6 +50,11 @@ define(['angular', 'app', 'beer-model', 'filters', 'photo-service'], function(an
                            });
                        }
                      }
+
+                    if(previousDetailPage) {
+                      $location.hash('photo-item-' + previousDetailPage);
+                      previousDetailPage = null;
+                    }
 
                      $scope.prefetchDetailPage = function(photo) {
                        (new Image()).src = photo.getMediumUrl();
