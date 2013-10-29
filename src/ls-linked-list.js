@@ -44,6 +44,7 @@ define(['services'], function(services) {
       },
 
       _storeArray: function(key, array) {
+        console.log('sorting array with key ' + key);
         if(!array || array.length === 0) {
           return;
         }
@@ -64,6 +65,7 @@ define(['services'], function(services) {
         };
 
         for(var sortKey in (this.options.sorters || {})) {
+          console.log('determining sort order for ' + sortKey);
           var sorter = this.options.sorters[sortKey];
           previous = null;
           //TODO use map or forEach?

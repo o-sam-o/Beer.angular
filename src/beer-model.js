@@ -37,7 +37,13 @@ define(function() {
     },
 
     getDateTaken: function() {
-      return new Date(this.attr.datetaken);
+      if(!this.dateTaken) {
+        var parts = this.attr.datetaken.split(' ');
+        var datePart = parts[0].split('-');
+        var timePart = parts[1].split(':');
+        this.dateTaken = new Date(datePart[0], datePart[1] - 1, datePart[2], timePart[0], timePart[1], timePart[2]);
+      }
+      return this.dateTaken;
     },
 
     _detailedAttr: function(name) {
