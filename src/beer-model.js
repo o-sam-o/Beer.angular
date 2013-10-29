@@ -33,7 +33,8 @@ define(function() {
     },
 
     getDescription: function() {
-      return this._detailedAttr('description');
+      //Flickr seems to sometimes add a whitespace description
+      return $.trim(this._detailedAttr('description'));
     },
 
     getDateTaken: function() {
