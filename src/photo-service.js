@@ -48,7 +48,7 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
             }
         }
 
-        p1.$promise.then(chainedAPICallResolver);
+        p1.$promise = p1.$promise.then(chainedAPICallResolver);
         return p1;
       },
       postProcess: wrapPhotoEntry,
