@@ -25,7 +25,31 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
     lsDB = new LocalStorageDB({
       key: LS_KEY,
       loadList: function() {
-        return Photo.query({photoset_id: PHOTOSET_ID});
+        var p1 = Photo.query({photoset_id: PHOTOSET_ID});
+
+        var chainedAPICallResolver = function(result) {
+            console.log("Got photos " + result.length);
+            //FIXME wont work if exactly 500 photos
+            if(result.length % 500 != 0) {
+                console.log("Got all photos");
+                return result;
+            } else {
+                var nextPage = (result.length / 500 + 1);
+                console.log("Firing another photos request for page " + nextPage);
+                var p2 = Photo.query({photoset_id: PHOTOSET_ID, page: nextPage});
+                return p2.$promise.then(function(r2) {
+                    console.log("Adding to " + r2.length);
+                    result.forEach(function(v) {
+                        r2.push(v);
+                    });
+                    console.log("New length " + r2.length);
+                    return chainedAPICallResolver(r2);
+                });
+            }
+        }
+
+        p1.$promise.then(chainedAPICallResolver);
+        return p1;
       },
       postProcess: wrapPhotoEntry,
       sorters: {
@@ -117,7 +141,8 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
                               },
                               isArray: true,
                               transformResponse: function(data) {
-                                return JSON.parse(data).photoset.photo;                              }
+                                return JSON.parse(data).photoset.photo;
+                              }
                             }
                           });
 
