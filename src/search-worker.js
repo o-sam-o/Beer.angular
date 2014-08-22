@@ -3,6 +3,7 @@ var alreadyReturned = null;
 var indexDone = false;
 // Ideally we woudn't have to do this and we could access the localstorage directly ...
 var searchables = [];
+var searchablesIds = [];
 
 onmessage = function(oEvent) {
   var data = oEvent.data;
@@ -42,7 +43,12 @@ var doSearch = function() {
 }
 
 var doIndex = function(value) {
-  searchables.push(value);
-  doSearch();
+  if (searchablesIds.indexOf(value.id) === -1) {
+    searchables.push(value);
+    searchablesIds.push(value.id);
+    doSearch();
+  } else {
+      //FIXME we shouldn't get here ...
+  }
   //TODO add some indexing here
 }
