@@ -1,7 +1,7 @@
 define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSummary) {
   'use strict';
 
-  var API_KEY = "ef9ad4ef689af505cde45ec1dc31120f";
+  var API_KEY = "3fffd0917fa897e24bd5a442018df29a";
   var PHOTOSET_ID = "72157625277593652";
   var LS_KEY = 'photoStream';
 
@@ -117,7 +117,7 @@ define(['services', 'beer-model', 'ls-linked-list'], function(services, PhotoSum
     }, false);
 
     var photosSortedBy = {};
-    Photo = $resource('http://api.flickr.com/services/rest/', 
+    Photo = $resource('https://api.flickr.com/services/rest/', 
                           {
                             api_key: API_KEY,
                             format: 'json',
